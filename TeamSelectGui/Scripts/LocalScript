@@ -1,0 +1,46 @@
+------ Services -------
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+-----------------------
+
+------ Modules ------
+local Modules = ReplicatedStorage:WaitForChild("Modules")
+local TeamModule = require(Modules:WaitForChild("TeamModule"))
+---------------------
+
+------ RemotesEvents ------
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local TeamSelectEvent = Remotes:WaitForChild("TeamSelectEvent")
+---------------------------
+
+
+local plr = Players.LocalPlayer
+
+--- Main UI
+local teamSelectGui = script.Parent.Parent
+local teamSelectFrame = teamSelectGui.TeamSelectFrame
+
+--- Frames
+local blueFrame = teamSelectFrame.BlueFrame
+local redFrame = teamSelectFrame.RedFrame
+
+--- buttons
+local blueJoinButton = blueFrame.JoinButton
+local redJoinButton = redFrame.JoinButton
+
+
+
+---- prevent remote event spam
+blueJoinButton.Activated:Connect(function()
+	TeamSelectEvent:FireServer("Blue")
+end)
+
+
+redJoinButton.Activated:Connect(function()
+	TeamSelectEvent:FireServer("Red")
+end)
+
+
+
+
+teamSelectGui.Enabled = true
